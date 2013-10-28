@@ -123,7 +123,7 @@ def checkout(user=None):
             run('mkdir -p %s/%s' % (home, dir))
         if not fabtools.files.is_dir('%s/checkouts/readthedocs.org' % home):
             with cd('%s/checkouts/' % home):
-                run('git clone git://github.com/rtfd/readthedocs.org.git')
+                run('git clone git://github.com/bsauer/readthedocs.org.git')
         if not fabtools.files.is_file('%s/bin/python' % home):
             run('virtualenv %s' % home)
         run(('%s/bin/pip install -U -r %s/checkouts/readthedocs.org/'
