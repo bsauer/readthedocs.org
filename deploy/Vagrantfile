@@ -1,5 +1,13 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+BOX_NAME = ENV['BOX_NAME'] || "lucid32"
+BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/lucid32.box"
+
+
 Vagrant::Config.run do |config|
-  config.vm.box = "lucid32"
+  config.vm.box = BOX_NAME
+  config.vm.box_url = BOX_URI
   config.vm.forward_port  80, 8080
   config.vm.forward_port  9999, 9999
 
