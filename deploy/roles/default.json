@@ -5,7 +5,7 @@
   "chef_type": "role",
   "run_list": [ "main::default", "main::python", "main::munin", "main::security"],
   "default_attributes": {
-      "all_servers": {"golem": "127.0.0.1"},
+      "all_servers": {"precise64": "127.0.0.1"},
       "base_packages": ["git-core", "ipython", "subversion", "bzr", "graphviz"],
       "ubuntu_python_packages": ["python-setuptools", "python-pip", "python-dev", "libpq-dev"],
       "pip_python_packages": {"virtualenv": "1.5.1", "mercurial": "1.7"},
@@ -13,7 +13,7 @@
         "docs": {
           "id": 1005,
           "full_name": "Docs User",
-          "key": "redacted"
+          "key": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAgIk0yfUFu2A3aB/NqA6sZi9WOsAEpuWZXSJVuc+dnzVganUhoTamnM6lUZzMAcWRRySrZsaxowkNU/4u1QX+792Q0EM5sKg8wTUuDUVGwSuiIULyacw4/eHDqhZczdh8Ka8/QZgfiBvjL/jh0SZ6Ky1fTOP5uulnzBN6hi6KKKk= readthedocs"
         }
       },
       "groups": {

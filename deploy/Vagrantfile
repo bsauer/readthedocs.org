@@ -1,8 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-BOX_NAME = ENV['BOX_NAME'] || "lucid32"
-BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/lucid32.box"
+# BOX_NAME = ENV['BOX_NAME'] || "lucid32"
+#BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/lucid32.box"
+BOX_NAME = ENV['BOX_NAME'] || "precise64"
+BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/precise64.box"
 
 
 Vagrant::Config.run do |config|
