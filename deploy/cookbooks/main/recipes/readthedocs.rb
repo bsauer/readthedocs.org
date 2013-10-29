@@ -48,7 +48,7 @@ directory "/home/docs/sites/readthedocs.org/checkouts" do
 end
 
 git "/home/docs/sites/readthedocs.org/checkouts/readthedocs.org" do
-  repository "git://github.com/rtfd/readthedocs.org.git"
+  repository "git://github.com/bsauer/readthedocs.org.git"
   reference "HEAD"
   user "docs"
   group "docs"
