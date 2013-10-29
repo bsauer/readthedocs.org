@@ -2,7 +2,7 @@ package "postgresql" do
     :upgrade
 end
 
-service "postgresql-9.1" do
+service "postgresql" do
   enabled true
   running true
   supports :status => true, :restart => true
@@ -12,5 +12,5 @@ end
 cookbook_file "/etc/postgresql/9.1/main/pg_hba.conf" do
     source "pg_hba.conf"
     mode 0755
-    notifies :restart, resources(:service => "postgresql-9.1")
+    notifies :restart, resources(:service => "postgresql")
 end
