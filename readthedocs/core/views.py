@@ -5,9 +5,7 @@ documentation and header rendering, and server errors.
 
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.http import (HttpResponse, HttpResponseRedirect, Http404,
-                         HttpResponseNotFound)
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_view_exempt
@@ -32,6 +30,7 @@ import logging
 import redis
 
 log = logging.getLogger(__name__)
+pc_log = logging.getLogger(__name__+'.post_commit')
 
 
 def homepage(request):
@@ -93,19 +92,20 @@ def _build_version(project, slug, already_built=()):
         # active
         version = project.versions.get(slug='latest')
         update_docs.delay(pk=project.pk, version_pk=version.pk, force=True)
-        log.info(("(Version build) building %s:%s"
+        pc_log.info(("(Version build) Building %s:%s"
                   % (project.slug, version.slug)))
         return "latest"
     elif project.versions.exclude(active=True).filter(slug=slug).exists():
-        log.info(("(Version build) not building %s"% slug))
+        pc_log.info(("(Version build) Not Building %s"% slug))
         return None
     elif slug not in already_built:
         version = project.versions.get(slug=slug)
         update_docs.delay(pk=project.pk, version_pk=version.pk, force=True)
-        log.info(("(Version build) building %s:%s"
+        pc_log.info(("(Version build) Building %s:%s"
                   % (project.slug, version.slug)))
         return slug
     else:
+        pc_log.info(("(Version build) Not Building %s"% slug))
         return None
 
 def _build_branches(project, branch_list):
@@ -114,7 +114,7 @@ def _build_branches(project, branch_list):
         to_build = set()
         not_building = set()
         for version in versions:
-            log.info(("(Branch Build) Processing %s:%s"
+            pc_log.info(("(Branch Build) Processing %s:%s"
                       % (project.slug, version.slug)))
             ret =  _build_version(project, version.slug, already_built=to_build)
             if ret:
@@ -131,15 +131,15 @@ def _build_url(url, branches):
             (to_build, not_building) = _build_branches(project, branches)
         if to_build:
             msg = '(URL Build) Build Started: %s [%s]' % (url, ' '.join(to_build))
-            log.info(msg)
+            pc_log.info(msg)
             return HttpResponse(msg)
         else:
             msg = '(URL Build) Not Building: %s [%s]' % (url, ' '.join(not_building))
-            log.info(msg)
+            pc_log.info(msg)
             return HttpResponse(msg)
     except Exception, e:
         msg = "(URL Build) Failed: %s:%s" % (url, e)
-        log.error(msg)
+        pc_log.error(msg)
         return HttpResponse(msg)
 
 @csrf_view_exempt
@@ -152,7 +152,7 @@ def github_build(request):
         url = obj['repository']['url']
         ghetto_url = url.replace('http://', '').replace('https://', '')
         branch = obj['ref'].replace('refs/heads/', '')
-        log.info("(Incoming Github Build) %s [%s]" % (ghetto_url, branch))
+        pc_log.info("(Incoming Github Build) %s [%s]" % (ghetto_url, branch))
         return _build_url(ghetto_url, [branch])
 
 @csrf_view_exempt
@@ -162,8 +162,8 @@ def bitbucket_build(request):
         rep = obj['repository']
         branches = [rec['branch'] for rec in obj['commits']]
         ghetto_url = "%s%s" % ("bitbucket.org",  rep['absolute_url'].rstrip('/'))
-        log.info("(Incoming Bitbucket Build) %s [%s]" % (ghetto_url, ' '.join(branches)))
-        log.info("(Incoming Bitbucket Build) JSON: \n\n%s\n\n" % obj)
+        pc_log.info("(Incoming Bitbucket Build) %s [%s]" % (ghetto_url, ' '.join(branches)))
+        pc_log.info("(Incoming Bitbucket Build) JSON: \n\n%s\n\n" % obj)
         return _build_url(ghetto_url, branches)
 
 @csrf_view_exempt
@@ -173,17 +173,14 @@ def generic_build(request, pk=None):
     # Allow slugs too
     except (Project.DoesNotExist, ValueError):
         project = Project.objects.get(slug=pk)
-    context = {'built': False, 'project': project}
     if request.method == 'POST':
-        context['built'] = True
         slug = request.POST.get('version_slug', None)
         if slug:
-            log.info("(Incoming Generic Build) %s [%s]" % (project.slug, slug))
+            pc_log.info("(Incoming Generic Build) %s [%s]" % (project.slug, slug))
             _build_version(project, slug)
         else:
-            log.info("(Incoming Generic Build) %s [%s]" % (project.slug, 'latest'))
+            pc_log.info("(Incoming Generic Build) %s [%s]" % (project.slug, 'latest'))
             update_docs.delay(pk=pk, force=True)
-        return redirect('builds_project_list', project.slug)
     return redirect('builds_project_list', project.slug)
 
 
