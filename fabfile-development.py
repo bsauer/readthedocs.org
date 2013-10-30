@@ -11,7 +11,14 @@ env.virtualenv = '/home/%s/rtd' % (env.user)
 def install_prerequisites():
     """Install prerequisites."""
     sudo("apt-get -y install python-dev python-pip git redis-server texlive "
-         "texlive-latex-extra")
+         " texlive-latex-extra "
+         " git-core python-dev "
+         " postgresql-client libpq-dev subversion graphviz"
+         " curl sqlite libxml2-dev libxslt-dev vim g++ python-numpy "
+         " python-scipy build-essential texlive-full libevent-dev "
+         " libmysqlclient-dev python-m2crypto libffi-dev "
+         " graphviz-dev libenchant1c2a"
+         )
     sudo("pip install virtualenv")
 
 
