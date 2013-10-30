@@ -1,8 +1,8 @@
 from fabric.api import cd, env, prefix, run, sudo, task
 
 # Fill out USER and HOSTS configuration before running
-env.user = ''
-env.hosts = ['']
+env.user = 'ueadmin'
+env.hosts = ['10.5.21.129']
 
 env.code_dir = '/home/%s/rtd/checkouts/readthedocs.org' % (env.user)
 env.virtualenv = '/home/%s/rtd' % (env.user)
@@ -24,7 +24,7 @@ def clone_repository():
     """Clone readthedocs repo"""
     run("mkdir %s/checkouts" % (env.virtualenv))
     with cd("%s/checkouts" % env.virtualenv):
-        run("git clone http://github.com/rtfd/readthedocs.org.git")
+        run("git clone http://github.com/bsauer/readthedocs.org.git")
 
 
 def pip_requirements():
