@@ -24,7 +24,7 @@ def clone_repository():
     """Clone readthedocs repo"""
     run("mkdir %s/checkouts" % (env.virtualenv))
     with cd("%s/checkouts" % env.virtualenv):
-        run("git clone http://github.com/rtfd/readthedocs.org.git")
+        run("git clone http://github.com/bsauer/readthedocs.org.git")
 
 
 def pip_requirements():
