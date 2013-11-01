@@ -264,7 +264,8 @@ class Project(models.Model):
                 #tasks.remove_dir.delay(os.path.join(self.doc_path,
                                                     #'checkouts'))
         if not self.slug:
-            self.slug = slugify(self.name)
+            # Subdomains can't have underscores in them.
+            self.slug = slugify(self.name).replace('_','-')
             if self.slug == '':
                 raise Exception(_("Model must have slug"))
         obj = super(Project, self).save(*args, **kwargs)
@@ -609,16 +610,19 @@ class Project(models.Model):
 
     def version_from_branch_name(self, branch):
         try:
-            return (self.versions.filter(identifier=branch) |
-                    self.versions.filter(identifier=('remotes/origin/%s'
-                                                     % branch)))[0]
+            return (
+                self.versions.filter(identifier=branch) |
+                self.versions.filter(identifier=('remotes/origin/%s' % branch)) |
+                self.versions.filter(identifier=('origin/%s' % branch))
+            )[0]
         except IndexError:
             return None
 
     def versions_from_branch_name(self, branch):
         return (
             self.versions.filter(identifier=branch) |
-            self.versions.filter(identifier='remotes/origin/%s' % branch)
+            self.versions.filter(identifier='remotes/origin/%s' % branch) |
+            self.versions.filter(identifier='origin/%s' % branch)
         )
     def get_default_version(self):
         """

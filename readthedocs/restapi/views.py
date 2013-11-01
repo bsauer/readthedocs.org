@@ -91,7 +91,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
                 'deleted_versions': deleted_versions,
             })       
         except Exception, e:
-            log.exception(e.message)
+            log.exception("Sync Versions Error: %s" % e.message)
             return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -261,6 +261,7 @@ def index_search(request):
 
     index_list = []
     for page in page_list:
+        log.debug("(API Index) %s:%s" % (project.slug, page['path']))
         page_scale = ret_json['scaled_page'].get(page['path'], 1)
         page['_boost'] = page_scale + project_scale
         page['project'] = project.slug
@@ -279,14 +280,15 @@ def search(request):
     query = request.GET.get('q', None)
 
     if project_slug:
+        log.debug("(API Search) %s:%s" % (project_slug, query))
         project = Project.objects.get(slug=project_slug)
         # This is a search within a project -- do a Page search.
         body = {
             "filter": {
-                "term": {
-                    "project": project.slug,
-                    "version": version_slug,
-                },
+                "and": [
+                    {"term": {"project": project.slug}},
+                    {"term": {"version": version_slug}},
+                ]
             },
             "query": {
                 "bool": {
@@ -297,21 +299,22 @@ def search(request):
                     ]
                 }
             },
-            "facets" : {
-              "path" : { "terms" : {"field" : "path"} }
+            "facets": {
+                "path": {
+                    "terms": {"field": "path"}}
             },
-            "highlight" : {
-                "fields" : {
-                    "title" : {},
-                    "headers" : {},
-                    "content" : {},
+            "highlight": {
+                "fields": {
+                    "title": {},
+                    "headers": {},
+                    "content": {},
                 }
             }
-
         }
         results = PageIndex().search(body, routing=project.pk, fields=['title', 'project', 'version', 'path'])
 
     else:
+        log.debug("(API Search) %s" % (query))
         body = {
             "query": {
                 "bool": {
