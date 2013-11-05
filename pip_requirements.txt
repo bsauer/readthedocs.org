@@ -33,6 +33,7 @@ doc2dash
 beautifulsoup4
 lxml
 pytz
+django-redis-cache
 
 # Version comparison stuff
 distlib
