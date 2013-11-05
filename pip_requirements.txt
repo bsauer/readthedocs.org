@@ -1,5 +1,4 @@
 # Pypi ftw.
-Distutils2
 Sphinx
 Unipath
 bzr
