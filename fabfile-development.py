@@ -1,8 +1,8 @@
 from fabric.api import cd, env, prefix, run, sudo, task
 
 # Fill out USER and HOSTS configuration before running
-env.user = 'ueadmin'
-env.hosts = ['10.5.21.129']
+env.user = 'docs'
+env.hosts = ['10.5.21.113']
 
 env.code_dir = '/home/%s/rtd/checkouts/readthedocs.org' % (env.user)
 env.virtualenv = '/home/%s/rtd' % (env.user)
