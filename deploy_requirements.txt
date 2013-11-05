@@ -1,13 +1,13 @@
 -r pip_requirements.txt
-psycopg2==2.4
-gunicorn==0.12.1
-pysolr==2.0.13
-dnspython==1.11.0
-launchpadlib==1.9.8
-django-redis-cache==0.9.5
+psycopg2
+gunicorn
+pysolr
+dnspython
+launchpadlib
+django-redis-cache
 
 #For resizing images
 pillow
 
 #Uncomment this if you want to index things in solr.
-cssselect==0.7.1
+cssselect

@@ -1,44 +1,44 @@
 # Pypi ftw.
-Distutils2==1.0a3
-Sphinx==1.1.3
-Unipath==0.2.1
-bzr==2.5b4
-celery-haystack==0.6.2
-celery==3.0.24
-django-celery==3.0.23
-django-extensions==0.7.1
-django-guardian==1.0.4
-django-kombu==0.9.4
-django-nose==1.1
-django-profiles==0.2
-django-secure==0.1.2
-django==1.4.8
-docutils==0.8.1
-elasticsearch==0.4.3
-github2==0.5.2
-httplib2==0.7.2
-mercurial==2.7.2
-mimeparse==0.1.3
-pyquery==1.2.2
-redis==2.7.1
-simplejson==2.3.0
-south==0.7.6
-sphinx-http-domain==0.2
-django-gravatar2==1.0.6
-slumber==0.6
-requests==2.0
-virtualenv==1.10.1
-doc2dash==1.1.0
-beautifulsoup4==4.1.3
-lxml==3.0.2
-pytz==2013b
+Distutils2
+Sphinx
+Unipath
+bzr
+celery-haystack
+celery
+django-celery
+django-extensions
+django-guardian
+django-kombu
+django-nose
+django-profiles
+django-secure
+django
+docutils
+elasticsearch
+github2
+httplib2
+mercurial
+mimeparse
+pyquery
+redis
+simplejson
+south
+sphinx-http-domain
+django-gravatar2
+slumber
+requests
+virtualenv
+doc2dash
+beautifulsoup4
+lxml
+pytz
 
 # Version comparison stuff
-distlib==0.1.2
+distlib
 
 # Commenting stuff
-djangorestframework==2.3.6
-django-cors-headers==0.11
+djangorestframework
+django-cors-headers
 
 # Pegged git requirements
 git+git://github.com/toastdriven/django-haystack@259274e4127f723d76b893c87a82777f9490b960#egg=django_haystack

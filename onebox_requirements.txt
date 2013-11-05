@@ -7,3 +7,12 @@ pyquery
 python-memcached
 whoosh
 django-redis
+
+psycopg2
+pysolr
+launchpadlib
+django-redis-cache
+
+#Uncomment this if you want to index things in solr.
+cssselect
+

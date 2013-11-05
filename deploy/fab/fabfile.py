@@ -127,7 +127,7 @@ def checkout(user=None):
         if not fabtools.files.is_file('%s/bin/python' % home):
             run('virtualenv %s' % home)
         run(('%s/bin/pip install -U -r %s/checkouts/readthedocs.org/'
-             'deploy_requirements.txt') % (home, home))
+             'onebox_requirements.txt') % (home, home))
 
 
 def setup_env(user=None):
