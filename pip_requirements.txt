@@ -33,7 +33,6 @@ doc2dash
 beautifulsoup4
 lxml
 pytz
-SpellChecker
 
 # Version comparison stuff
 distlib
