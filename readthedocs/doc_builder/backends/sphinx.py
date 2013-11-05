@@ -45,19 +45,13 @@ if 'html_theme' in globals():
     if html_theme in ['default']:
         # Allow people to bail with a hack of having an html_style
         if not 'html_style' in globals():
-            if globals().get('RTD_NEW_THEME', False):
-                html_theme = 'sphinx_rtd_theme'
-            else:
-                html_style = 'rtd.css'
-                html_theme = 'default'
+            html_theme = 'sphinx_rtd_theme'
+            html_style = None
             html_theme_options = {}
             using_rtd_theme = True
 else:
-    if globals().get('RTD_NEW_THEME', False):
-        html_theme = 'sphinx_rtd_theme'
-    else:
-        html_style = 'rtd.css'
-        html_theme = 'default'
+    html_theme = 'sphinx_rtd_theme'
+    html_style = None
     html_theme_options = {}
     using_rtd_theme = True
 
@@ -65,6 +59,8 @@ else:
 if globals().get('RTD_NEW_THEME', False):
     html_theme = 'sphinx_rtd_theme'
     html_style = None
+    html_theme_options = {}
+    using_rtd_theme = True
 
 if globals().get('RTD_OLD_THEME', False):
     html_style = 'rtd.css'
@@ -178,13 +174,14 @@ class Builder(BaseBuilder):
         os.chdir(project.conf_dir(self.version.slug))
         force_str = " -E " if self.force else ""
         if project.use_virtualenv:
-            build_command = "%s %s -b readthedocs . _build/html " % (
+            build_command = "%s %s -b readthedocs -D language=%s . _build/html " % (
                 project.venv_bin(version=self.version.slug,
                                  bin='sphinx-build'),
-                force_str)
+                force_str,
+                project.language)
         else:
-            build_command = ("sphinx-build %s -b readthedocs . _build/html"
-                             % (force_str))
+            build_command = ("sphinx-build %s -b readthedocs -D language=%s . _build/html"
+                             % (force_str, project.language))
         build_results = run(build_command, shell=True)
         self._zip_html()
         if 'no targets are out of date.' in build_results[1]:
