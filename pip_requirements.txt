@@ -1,6 +1,6 @@
 # Pypi ftw.
 Distutils2==1.0a4
-python-setuptools-git
+setuptools-git
 Sphinx
 Unipath
 bzr
