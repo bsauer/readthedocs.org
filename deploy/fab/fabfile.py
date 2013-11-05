@@ -16,10 +16,10 @@ db_ip = '10.176.9.67'
 
 
 def all():
-    #install_packages('build')
-    #install_packages('web')
-    #install_packages('db')
-    #users('docs')
+    install_packages('build')
+    install_packages('web')
+    install_packages('db')
+    users('docs')
     checkout('docs')
     setup_env('docs')
 
