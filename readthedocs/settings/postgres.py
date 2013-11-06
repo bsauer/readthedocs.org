@@ -7,7 +7,7 @@ DATABASES = {
         'NAME': 'docs',
         'USER': 'postgres',  # Not used with sqlite3.
         'PASSWORD': '',
-        'HOST': '10.177.73.97',
+        'HOST': 'localhost',
         'PORT': '',
     }
 }
@@ -16,8 +16,8 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 CELERY_ALWAYS_EAGER = False
 
-MEDIA_URL = 'https://media.readthedocs.org/'
-STATIC_URL = 'https://media.readthedocs.org/static/'
+MEDIA_URL = 'https://uedocs01.csgicorp.com/'
+STATIC_URL = 'https://uedocs01.csgicorp.com/static/'
 ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
@@ -45,10 +45,10 @@ ES_HOSTS = ['backup:9200', 'db:9200']
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
 
-SLUMBER_API_HOST = 'https://readthedocs.org'
-WEBSOCKET_HOST = 'websocket.readthedocs.org:8088'
+SLUMBER_API_HOST = 'https://uedocs01.csgicorp.com'
+WEBSOCKET_HOST = 'uedocs01.csgicorp.com:8088'
 
-PRODUCTION_DOMAIN = 'readthedocs.org'
+PRODUCTION_DOMAIN = 'uedocs01.csgicorp.com'
 USE_SUBDOMAIN = True
 NGINX_X_ACCEL_REDIRECT = True
 

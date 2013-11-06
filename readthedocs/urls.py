@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import url, patterns, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 from django.conf import settings
 from django.views.generic.simple import direct_to_template
@@ -126,3 +127,4 @@ if settings.DEBUG:
             view='django.views.static.serve',
             kwargs={'document_root': settings.MEDIA_ROOT}),
     )
+    urlpatterns += staticfiles_urlpatterns()

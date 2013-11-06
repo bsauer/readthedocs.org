@@ -8,12 +8,11 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TASTYPIE_FULL_DEBUG = True
 
-PRODUCTION_DOMAIN = 'readthedocs.org'
+PRODUCTION_DOMAIN = 'uedocs01.csgicorp.com'
 USE_SUBDOMAIN = False
 
 ADMINS = (
-    ('Charlie Leifer', 'coleifer@gmail.com'),
-    ('Eric Holscher', 'eric@ericholscher.com'),
+    ('Bernie Sauer', 'bernie.sauer@csgi.com'),
 )
 
 MANAGERS = ADMINS
@@ -46,7 +45,7 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 FORCE_WWW = False
 #APPEND_SLASH = False
 
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Denver'
 LANGUAGE_CODE = 'en-us'
 LANGUAGES = (
     ('en', gettext('English')),
@@ -83,7 +82,7 @@ MIDDLEWARE_CLASSES = (
     #'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
-CORS_ORIGIN_REGEX_WHITELIST = ('^http://(.+)\.readthedocs\.org$', '^https://(.+)\.readthedocs\.org$')
+CORS_ORIGIN_REGEX_WHITELIST = ('^http://(.+)\.csgicorp\.com$', '^https://(.+)\.csgicorp\.com$')
 # So people can post to their accounts
 CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'urls'
@@ -123,6 +122,7 @@ INSTALLED_APPS = [
     'django_nose',
     'rest_framework',
     'corsheaders',
+    'gunicorn',
 
     # Celery bits
     'djcelery',
@@ -164,8 +164,8 @@ CELERY_ROUTES = {
 }
 
 
-DEFAULT_FROM_EMAIL = "no-reply@readthedocs.org"
-SESSION_COOKIE_DOMAIN = 'readthedocs.org'
+DEFAULT_FROM_EMAIL = "no-reply@uedocs01.csgicorp.com"
+SESSION_COOKIE_DOMAIN = 'uedocs01.csgicorp.com'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
